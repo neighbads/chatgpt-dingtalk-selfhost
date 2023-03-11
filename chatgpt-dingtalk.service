@@ -1,0 +1,15 @@
+[Unit]
+Description=chatgpt-dingtalk Service
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+ExecStart=/root/chatgpt/chatgpt-dingtalk
+WorkingDirectory=/root/chatgpt/
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target

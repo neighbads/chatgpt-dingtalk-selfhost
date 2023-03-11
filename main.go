@@ -27,7 +27,6 @@ var Welcome string = `Commands:
 💵 余额/status    👉 查询剩余额度
 🚀 帮助/help      👉 显示帮助信息
 =================================
-💪 Power By https://github.com/eryajf/chatgpt-dingtalk
 `
 
 // 💵 余额 👉 查看接口可调用额度
