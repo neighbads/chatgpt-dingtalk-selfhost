@@ -25,6 +25,10 @@ type Configuration struct {
 	DefaultMode string `json:"default_mode"`
 	// 代理地址
 	HttpProxy string `json:"http_proxy"`
+	// 群组校验
+	AllowGroups []string `json:"allow_groups"`
+	// 用户校验
+	AllowUsers []string `json:"allow_users"`
 	// 用户单日最大请求次数
 	MaxRequest int `json:"max_request"`
 	// 指定服务启动端口，默认为 8090

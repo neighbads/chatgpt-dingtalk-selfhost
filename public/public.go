@@ -55,3 +55,29 @@ func CheckRequest(rmsg *ReceiveMsg) bool {
 	UserService.SetUseRequestCount(rmsg.SenderStaffId, count+1)
 	return true
 }
+
+func CheckAllowGroups(rmsg ReceiveMsg) bool {
+	if len(Config.AllowGroups) == 0 {
+		return true
+	}
+
+	for _, v := range Config.AllowGroups {
+		if rmsg.ConversationTitle == v {
+			return true
+		}
+	}
+	return false
+}
+
+func CheckAllowUsers(rmsg ReceiveMsg) bool {
+	if len(Config.AllowUsers) == 0 {
+		return true
+	}
+
+	for _, v := range Config.AllowUsers {
+		if rmsg.SenderNick == v {
+			return true
+		}
+	}
+	return false
+}

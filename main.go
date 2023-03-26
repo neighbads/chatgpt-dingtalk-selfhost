@@ -45,6 +45,11 @@ func Start() {
 			return ship.ErrBadRequest.New(fmt.Errorf("从钉钉回调过来的内容为空，根据过往的经验，或许重新创建一下机器人，能解决这个问题"))
 		}
 
+		if !public.CheckAllowGroups(msgObj) && !public.CheckAllowUsers(msgObj) {
+			logger.Warning(fmt.Sprintf("群组或用户校验失败，群组ID：%s", msgObj.ChatbotUserID))
+			return ship.ErrBadRequest.New(fmt.Errorf("群组或用户校验失败，群组ID：%s", msgObj.ChatbotUserID))
+		}
+
 		// 打印钉钉回调过来的请求明细
 		logger.Info(fmt.Sprintf("dingtalk callback parameters: %#v", msgObj))
 		// TODO: 校验请求
