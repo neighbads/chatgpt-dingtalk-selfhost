@@ -77,11 +77,11 @@ func (r ReceiveMsg) ReplyToDingtalk(msgType, msg string) (statuscode int, err er
 	var msgtmp interface{}
 	switch msgType {
 	case string(TEXT):
-		msgtmp = &TextMessage{Text: &Text{Content: msg}, MsgType: TEXT, At: &At{AtUserIds: []string{atUser}}}
+		msgtmp = &TextMessage{Text: &Text{Content: msg}, MsgType: TEXT}
 	case string(MARKDOWN):
-		msgtmp = &MarkDownMessage{MsgType: MARKDOWN, At: &At{AtUserIds: []string{atUser}}, MarkDown: &MarkDown{Title: "Markdown Type", Text: msg}}
+		msgtmp = &MarkDownMessage{MsgType: MARKDOWN, MarkDown: &MarkDown{Title: "Markdown Type", Text: msg}}
 	default:
-		msgtmp = &TextMessage{Text: &Text{Content: msg}, MsgType: TEXT, At: &At{AtUserIds: []string{atUser}}}
+		msgtmp = &TextMessage{Text: &Text{Content: msg}, MsgType: TEXT}
 	}
 
 	data, err := json.Marshal(msgtmp)
