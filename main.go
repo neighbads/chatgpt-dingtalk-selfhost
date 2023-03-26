@@ -28,8 +28,6 @@ var Welcome string = `Commands:
 🌈 模板 👉 内置的prompt
 🎨 图片 👉 根据prompt生成图片
 =================================
-🚜 例：@我发送 空 或 帮助 将返回此帮助信息
-💪 Power By https://github.com/eryajf/chatgpt-dingtalk
 `
 
 func Start() {
@@ -52,10 +50,11 @@ func Start() {
 
 		// 打印钉钉回调过来的请求明细
 		logger.Info(fmt.Sprintf("dingtalk callback parameters: %#v", msgObj))
+		logger.Info(fmt.Sprintf("dingtalk callback parameters: %s", msgObj.Text.Content))
 		// TODO: 校验请求
 		if len(msgObj.Text.Content) == 1 || strings.TrimSpace(msgObj.Text.Content) == "帮助" {
 			// 欢迎信息
-			_, err := msgObj.ReplyToDingtalk(string(public.MARKDOWN), Welcome)
+			_, err := msgObj.ReplyToDingtalk(string(public.TEXT), Welcome)
 			if err != nil {
 				logger.Warning(fmt.Errorf("send message error: %v", err))
 				return ship.ErrBadRequest.New(fmt.Errorf("send message error: %v", err))
@@ -63,6 +62,8 @@ func Start() {
 		} else {
 			// 除去帮助之外的逻辑分流在这里处理
 			switch {
+			case strings.HasPrefix(strings.TrimSpace(msgObj.Text.Content), "#pic"):
+				fallthrough
 			case strings.HasPrefix(strings.TrimSpace(msgObj.Text.Content), "#图片"):
 				return process.ImageGenerate(&msgObj)
 			default:
